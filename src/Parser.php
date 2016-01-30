@@ -82,13 +82,16 @@ class Parser
             ->addTokenParser(new TokenParser\Query\Fiql\ScalarOperator\GeTokenParser())
             ->addTokenParser(new TokenParser\Query\Fiql\ScalarOperator\LikeTokenParser());
 
-        return (new self(
-            (new ExpressionParser())
+        $expressionParser = new ExpressionParser();
+        $self = new self(
+            $expressionParser
                 ->registerTypeCaster('string', new TypeCaster\StringTypeCaster())
                 ->registerTypeCaster('integer', new TypeCaster\IntegerTypeCaster())
                 ->registerTypeCaster('float', new TypeCaster\FloatTypeCaster())
                 ->registerTypeCaster('boolean', new TypeCaster\BooleanTypeCaster())
-        ))
+        );
+
+        return $self
             ->addTokenParser(new TokenParser\SelectTokenParser())
             ->addTokenParser($queryTokenParser)
             ->addTokenParser(new TokenParser\SortTokenParser())

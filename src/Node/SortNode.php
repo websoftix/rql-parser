@@ -18,7 +18,7 @@ class SortNode extends AbstractNode
     /**
      * @param array $fields
      */
-    public function __construct(array $fields = [])
+    public function __construct(array $fields = array())
     {
         $this->fields = $fields;
     }

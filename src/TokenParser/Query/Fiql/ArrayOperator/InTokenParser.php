@@ -13,7 +13,7 @@ class InTokenParser extends AbstractArrayOperatorTokenParser
      */
     protected function getOperatorNames()
     {
-        return ['in'];
+        return array('in');
     }
 
     /**

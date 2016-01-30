@@ -13,7 +13,7 @@ class LeTokenParser extends AbstractScalarOperatorTokenParser
      */
     protected function getOperatorNames()
     {
-        return ['le', '<='];
+        return array('le', '<=');
     }
 
     /**

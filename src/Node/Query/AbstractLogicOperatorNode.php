@@ -15,7 +15,7 @@ abstract class AbstractLogicOperatorNode extends AbstractQueryNode
     /**
      * @param AbstractQueryNode[] $queries
      */
-    public function __construct(array $queries = [])
+    public function __construct(array $queries = array())
     {
         $this->queries = $queries;
     }

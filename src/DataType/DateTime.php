@@ -12,7 +12,7 @@ class DateTime extends \DateTime
     public static function createFromRqlFormat($dateTime)
     {
         if (strlen($dateTime) === 20) {
-            $dateTime = strtr($dateTime, ['Z' => 'UTC']);
+            $dateTime = strtr($dateTime, array('Z' => 'UTC'));
         } elseif (strlen($dateTime) === 10) {
             $dateTime = $dateTime . 'T00:00:00UTC';
         }

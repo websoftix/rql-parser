@@ -13,7 +13,7 @@ class NeTokenParser extends AbstractScalarOperatorTokenParser
      */
     protected function getOperatorNames()
     {
-        return ['ne', '<>', '!='];
+        return array('ne', '<>', '!=');
     }
 
     /**

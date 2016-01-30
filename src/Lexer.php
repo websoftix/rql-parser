@@ -40,7 +40,7 @@ class Lexer
         $this->code     = $code;
         $this->cursor   = 0;
         $this->end      = strlen($this->code);
-        $this->tokens   = [];
+        $this->tokens   = array();
 
         while ($this->cursor < $this->end) {
             $this->lexExpression();
@@ -139,7 +139,7 @@ class Lexer
 
     protected function processOperator($operator)
     {
-        static $operatorMap = [
+        static $operatorMap = array(
             '='     => 'eq',
             '=='    => 'eq',
 
@@ -151,7 +151,7 @@ class Lexer
 
             '>='    => 'ge',
             '<='    => 'le',
-        ];
+        );
 
         if (isset($operatorMap[$operator])) {
             $decoded = $operator;
@@ -226,7 +226,7 @@ class Lexer
                 return;
             }
 
-            foreach (['+', '-', ':', '*', '?'] as $invalidChar) {
+            foreach (array('+', '-', ':', '*', '?') as $invalidChar) {
                 if (strpos($value, $invalidChar) !== false) {
                     throw new SyntaxErrorException(
                         sprintf(

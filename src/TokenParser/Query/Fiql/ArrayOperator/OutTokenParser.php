@@ -13,7 +13,7 @@ class OutTokenParser extends AbstractArrayOperatorTokenParser
      */
     protected function getOperatorNames()
     {
-        return ['out'];
+        return array('out');
     }
 
     /**

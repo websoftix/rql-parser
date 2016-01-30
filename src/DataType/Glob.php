@@ -41,8 +41,8 @@ class Glob
         }
 
         $regex = strtr(
-            preg_quote(rawurldecode(strtr($glob, ['*' => self::REPLACE_ASTERISK, '?' => self::REPLACE_QUESTION])), '/'),
-            [self::REPLACE_ASTERISK => '.*', self::REPLACE_QUESTION => '.']
+            preg_quote(rawurldecode(strtr($glob, array('*' => self::REPLACE_ASTERISK, '?' => self::REPLACE_QUESTION))), '/'),
+            array(self::REPLACE_ASTERISK => '.*', self::REPLACE_QUESTION => '.')
         );
 
         if ($anchorStart) {

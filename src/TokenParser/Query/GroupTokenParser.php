@@ -34,7 +34,7 @@ class GroupTokenParser extends AbstractTokenParser
     public function parse(TokenStream $tokenStream)
     {
         $operator = null;
-        $queries = [];
+        $queries = array();
 
         $tokenStream->expect(Token::T_OPEN_PARENTHESIS);
 

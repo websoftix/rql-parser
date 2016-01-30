@@ -15,13 +15,13 @@ class SortTokenParser extends AbstractTokenParser
      */
     public function parse(TokenStream $tokenStream)
     {
-        $fields = [];
+        $fields = array();
 
         $tokenStream->expect(Token::T_OPERATOR, 'sort');
         $tokenStream->expect(Token::T_OPEN_PARENTHESIS);
 
         do {
-            $direction = $tokenStream->expect([Token::T_PLUS, Token::T_MINUS]);
+            $direction = $tokenStream->expect(array(Token::T_PLUS, Token::T_MINUS));
             $fields[$tokenStream->expect(Token::T_STRING)->getValue()] = $direction->test(Token::T_PLUS) ?
                 SortNode::SORT_ASC :
                 SortNode::SORT_DESC;

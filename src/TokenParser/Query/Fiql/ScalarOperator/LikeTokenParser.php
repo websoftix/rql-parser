@@ -13,7 +13,7 @@ class LikeTokenParser extends AbstractScalarOperatorTokenParser
      */
     protected function getOperatorNames()
     {
-        return ['like'];
+        return array('like');
     }
 
     /**

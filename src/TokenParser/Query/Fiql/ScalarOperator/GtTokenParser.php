@@ -13,7 +13,7 @@ class GtTokenParser extends AbstractScalarOperatorTokenParser
      */
     protected function getOperatorNames()
     {
-        return ['gt', '>'];
+        return array('gt', '>');
     }
 
     /**

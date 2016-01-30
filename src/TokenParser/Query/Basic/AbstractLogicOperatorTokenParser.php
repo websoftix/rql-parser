@@ -39,7 +39,7 @@ abstract class AbstractLogicOperatorTokenParser extends AbstractBasicTokenParser
         $tokenStream->expect(Token::T_OPERATOR, $this->getOperatorName());
         $tokenStream->expect(Token::T_OPEN_PARENTHESIS);
 
-        $queries = [];
+        $queries = array();
         do {
             $queries[] = $this->conditionTokenParser->parse($tokenStream);
             if (!$tokenStream->nextIf(Token::T_COMMA)) {

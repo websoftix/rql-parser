@@ -13,7 +13,7 @@ class EqTokenParser extends AbstractScalarOperatorTokenParser
      */
     protected function getOperatorNames()
     {
-        return ['eq', '=', '=='];
+        return array('eq', '=', '==');
     }
 
     /**

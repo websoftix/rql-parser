@@ -13,7 +13,7 @@ class GeTokenParser extends AbstractScalarOperatorTokenParser
      */
     protected function getOperatorNames()
     {
-        return ['ge', '>='];
+        return array('ge', '>=');
     }
 
     /**

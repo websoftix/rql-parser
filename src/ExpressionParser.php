@@ -13,7 +13,7 @@ class ExpressionParser implements ExpressionParserInterface
     /**
      * @var TypeCasterInterface[]
      */
-    protected $typeCasters = [];
+    protected $typeCasters = array();
 
     /**
      * @param string $type
@@ -61,7 +61,7 @@ class ExpressionParser implements ExpressionParserInterface
     {
         $tokenStream->expect(Token::T_OPEN_PARENTHESIS);
 
-        $values = [];
+        $values = array();
         do {
             $values[] = $this->parseScalar($tokenStream);
             if (!$tokenStream->nextIf(Token::T_COMMA)) {

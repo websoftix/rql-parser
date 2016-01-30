@@ -125,7 +125,7 @@ class Token
      */
     public static function getTypeName($type)
     {
-        static $typeMap = [
+        static $typeMap = array(
             self::T_END               => 'T_END',
 
             self::T_INTEGER           => 'T_INTEGER',
@@ -150,7 +150,7 @@ class Token
             self::T_EMPTY             => 'T_EMPTY',
             self::T_TRUE              => 'T_TRUE',
             self::T_FALSE             => 'T_FALSE',
-        ];
+        );
 
         if (!isset($typeMap[$type])) {
             throw new UnknownTokenException(sprintf('Token of type "%s" does not exist', $type));

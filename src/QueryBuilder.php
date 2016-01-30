@@ -75,7 +75,7 @@ class QueryBuilder
         } elseif ($current instanceof AndNode) {
             $current->addQuery($query);
         } else {
-            $this->query->setQuery(new AndNode([$current, $query]));
+            $this->query->setQuery(new AndNode(array($current, $query)));
         }
 
         return $this;

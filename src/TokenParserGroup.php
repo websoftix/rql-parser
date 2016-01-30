@@ -10,7 +10,7 @@ class TokenParserGroup extends AbstractTokenParser
     /**
      * @var TokenParserInterface[]
      */
-    protected $tokenParsers = [];
+    protected $tokenParsers = array();
 
     /**
      * @param TokenParserInterface $tokenParser
