@@ -49,6 +49,7 @@ class Parser
             ->registerTypeCaster('string', new TypeCaster\StringTypeCaster())
             ->registerTypeCaster('integer', new TypeCaster\IntegerTypeCaster())
             ->registerTypeCaster('float', new TypeCaster\FloatTypeCaster())
+            ->registerTypeCaster('timestamp', new TypeCaster\TimestampCaster())
             ->registerTypeCaster('boolean', new TypeCaster\BooleanTypeCaster());
         $arrayParser = new ValueParser\ArrayParser($scalarParser);
         $globParser = new ValueParser\GlobParser();
@@ -71,6 +72,8 @@ class Parser
             ->addNodeParser(new ComparisonOperator\Rql\GtNodeParser($fieldParser, $scalarParser))
             ->addNodeParser(new ComparisonOperator\Rql\LeNodeParser($fieldParser, $scalarParser))
             ->addNodeParser(new ComparisonOperator\Rql\GeNodeParser($fieldParser, $scalarParser))
+            ->addNodeParser(new ComparisonOperator\Rql\LteNodeParser($fieldParser, $scalarParser))
+            ->addNodeParser(new ComparisonOperator\Rql\GteNodeParser($fieldParser, $scalarParser))
             ->addNodeParser(new ComparisonOperator\Rql\LikeNodeParser($fieldParser, $globParser))
 
             ->addNodeParser(new ComparisonOperator\Fiql\InNodeParser($fieldParser, $arrayParser))
@@ -81,13 +84,17 @@ class Parser
             ->addNodeParser(new ComparisonOperator\Fiql\GtNodeParser($fieldParser, $scalarParser))
             ->addNodeParser(new ComparisonOperator\Fiql\LeNodeParser($fieldParser, $scalarParser))
             ->addNodeParser(new ComparisonOperator\Fiql\GeNodeParser($fieldParser, $scalarParser))
-            ->addNodeParser(new ComparisonOperator\Fiql\LikeNodeParser($fieldParser, $globParser));
+            ->addNodeParser(new ComparisonOperator\Fiql\LteNodeParser($fieldParser, $scalarParser))
+            ->addNodeParser(new ComparisonOperator\Fiql\GteNodeParser($fieldParser, $scalarParser))
+            ->addNodeParser(new ComparisonOperator\Fiql\LikeNodeParser($fieldParser, $globParser))
+            ->addNodeParser(new ComparisonOperator\Fiql\MatchNodeParser($fieldParser, $globParser));
 
         return (new NodeParserChain())
             ->addNodeParser($queryNodeParser)
-            ->addNodeParser(new NodeParser\SelectNodeParser($fieldParser))
+            ->addNodeParser(new NodeParser\SelectNodeParser(['count', 'sum', 'avg', 'min', 'max']))
             ->addNodeParser(new NodeParser\SortNodeParser($fieldParser))
-            ->addNodeParser(new NodeParser\LimitNodeParser($integerParser));
+            ->addNodeParser(new NodeParser\LimitNodeParser($integerParser))
+            ->addNodeParser(new NodeParser\GroupbyNodeParser());
     }
 
     /**

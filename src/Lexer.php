@@ -53,6 +53,7 @@ class Lexer
             ->addSubLexer(new SubLexer\GlobSubLexer())
             ->addSubLexer(new SubLexer\StringSubLexer())
             ->addSubLexer(new SubLexer\DatetimeSubLexer())
+            ->addSubLexer(new SubLexer\DateSubLexer())
             ->addSubLexer(new SubLexer\NumberSubLexer())
 
             ->addSubLexer(new SubLexer\SortSubLexer());

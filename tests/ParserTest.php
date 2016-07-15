@@ -113,7 +113,20 @@ class ParserTest extends \PHPUnit_Framework_TestCase
                     ->addLimit(new Node\LimitNode(1, 2))
                     ->getQuery(),
             ],
-
+            'select with aggregate functions and groupby'  => [
+                'select(a,avg(a),min(a),max(a),count(a),sum(a))&groupby(a,b)',
+                        (new QueryBuilder() )
+                        ->addSelect( new Node\SelectNode( [
+                            'a',
+                            new Node\AggregateFunctionNode( 'avg', 'a' ),
+                            new Node\AggregateFunctionNode( 'min', 'a' ),
+                            new Node\AggregateFunctionNode( 'max', 'a' ),
+                            new Node\AggregateFunctionNode( 'count', 'a' ),
+                            new Node\AggregateFunctionNode( 'sum', 'a' ),
+                        ] ))
+                        ->addGroupby(new Node\GroupbyNode( ['a', 'b']))
+                        ->getQuery(),
+            ],
             'string typecast' => [
                 'ne(x,string:*)&' .
                 'eq(a,string:3)&' .
@@ -206,6 +219,12 @@ class ParserTest extends \PHPUnit_Framework_TestCase
                     ->addQuery(new Node\Query\ScalarOperator\LikeNode('d', new Glob('2016-07-01T09:48:55Z')))
                     ->getQuery(),
             ],
+//            'timestamp typecast' => [
+//                'eq(a,timestamp:1444000000)',
+//                (new QueryBuilder())
+//                    ->addQuery(new Node\Query\ScalarOperator\EqNode('a', new \DateTime( '@' . '1444000000')))
+//                    ->getQuery()
+//            ],
             'constants' => [
                 'in(a,(null(),true(),false(),empty()))',
                 (new QueryBuilder())
@@ -289,6 +308,15 @@ class ParserTest extends \PHPUnit_Framework_TestCase
                 (new QueryBuilder())
                     ->addQuery(new Node\Query\ArrayOperator\InNode('a', [
                         new \DateTime('2015-04-16T17:40:32Z'),
+                        new \DateTime('2012-02-29T17:40:32Z'),
+                    ]))
+                    ->getQuery(),
+            ],
+            'date support' => [
+                'in(a,(2016-07-09,2012-02-29T17:40:32Z))',
+                (new QueryBuilder())
+                    ->addQuery(new Node\Query\ArrayOperator\InNode('a', [
+                        new \DateTime('2016-07-09T00:00:00Z'),
                         new \DateTime('2012-02-29T17:40:32Z'),
                     ]))
                     ->getQuery(),

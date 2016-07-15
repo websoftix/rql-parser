@@ -176,7 +176,21 @@ class LexerTest extends \PHPUnit_Framework_TestCase
                     [')', Token::T_CLOSE_PARENTHESIS],
                 ],
             ],
-
+            'date support' => [
+                'in(a,(2015-04-16,2012-02-29))',
+                [
+                    ['in', Token::T_OPERATOR],
+                    ['(', Token::T_OPEN_PARENTHESIS],
+                    ['a', Token::T_STRING],
+                    [',', Token::T_COMMA],
+                    ['(', Token::T_OPEN_PARENTHESIS],
+                    ['2015-04-16T00:00:00Z', Token::T_DATE],
+                    [',', Token::T_COMMA],
+                    ['2012-02-29T00:00:00Z', Token::T_DATE],
+                    [')', Token::T_CLOSE_PARENTHESIS],
+                    [')', Token::T_CLOSE_PARENTHESIS],
+                ],
+            ],
             'simple eq' => [
                 'eq(name,value)',
                 [

@@ -5,26 +5,17 @@ use Xiag\Rql\Parser\Token;
 use Xiag\Rql\Parser\TokenStream;
 use Xiag\Rql\Parser\NodeParserInterface;
 use Xiag\Rql\Parser\Node\SelectNode;
-use Xiag\Rql\Parser\SubParserInterface;
+use Xiag\Rql\Parser\Node\AggregateFunctionNode;
 
 class SelectNodeParser implements NodeParserInterface
 {
-    /**
-     * @var SubParserInterface
-     */
-    protected $fieldNameParser;
+    private $allowedFunctions;
 
-    /**
-     * @param SubParserInterface $fieldNameParser
-     */
-    public function __construct(SubParserInterface $fieldNameParser)
+    public function __construct(array $allowedFunctions)
     {
-        $this->fieldNameParser = $fieldNameParser;
+        $this->allowedFunctions = $allowedFunctions;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function parse(TokenStream $tokenStream)
     {
         $fields = [];
@@ -33,7 +24,19 @@ class SelectNodeParser implements NodeParserInterface
         $tokenStream->expect(Token::T_OPEN_PARENTHESIS);
 
         do {
-            $fields[] = $this->fieldNameParser->parse($tokenStream);
+            if (($agregate = $tokenStream->nextIf(Token::T_OPERATOR, $this->allowedFunctions)) !== null) {
+                $tokenStream->expect(Token::T_OPEN_PARENTHESIS);
+
+                $fields[] = new AggregateFunctionNode(
+                    $agregate->getValue(),
+                    $tokenStream->expect(Token::T_STRING)->getValue()
+                );
+
+                $tokenStream->expect(Token::T_CLOSE_PARENTHESIS);
+            } else {
+                $fields[] = $tokenStream->expect(Token::T_STRING)->getValue();
+            }
+
             if (!$tokenStream->nextIf(Token::T_COMMA)) {
                 break;
             }
@@ -43,7 +46,6 @@ class SelectNodeParser implements NodeParserInterface
 
         return new SelectNode($fields);
     }
-
     /**
      * @inheritdoc
      */

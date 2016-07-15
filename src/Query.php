@@ -5,6 +5,7 @@ use Xiag\Rql\Parser\Node\SelectNode;
 use Xiag\Rql\Parser\Node\AbstractQueryNode;
 use Xiag\Rql\Parser\Node\SortNode;
 use Xiag\Rql\Parser\Node\LimitNode;
+use Xiag\Rql\Parser\Node\GroupbyNode;
 
 /**
  * @codeCoverageIgnore
@@ -27,6 +28,12 @@ class Query extends AbstractNode
      * @var LimitNode
      */
     protected $limit;
+
+    /**
+     *
+     * @var GroupbyNode
+     */
+    private $groupby;
 
     /**
      * @inheritdoc
@@ -103,4 +110,23 @@ class Query extends AbstractNode
     {
         $this->limit = $limit;
     }
+
+    /**
+     * @return GroupbyNode
+     */
+    public function getGroupby()
+    {
+        return $this->groupby;
+    }
+
+    /**
+     * @param GroupbyNode $limit
+     * @return void
+     */
+    public function setGroupby( GroupbyNode $node )
+    {
+        $this->groupby = $node;
+        return $this;
+    }
+
 }

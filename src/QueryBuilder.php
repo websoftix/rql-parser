@@ -6,6 +6,7 @@ use Xiag\Rql\Parser\Node\SelectNode;
 use Xiag\Rql\Parser\Node\AbstractQueryNode;
 use Xiag\Rql\Parser\Node\SortNode;
 use Xiag\Rql\Parser\Node\LimitNode;
+use Xiag\Rql\Parser\Node\GroupbyNode;
 use Xiag\Rql\Parser\Node\Query\LogicalOperator\AndNode;
 
 class QueryBuilder
@@ -34,6 +35,8 @@ class QueryBuilder
             return $this->addSort($node);
         } elseif ($node instanceof LimitNode) {
             return $this->addLimit($node);
+        } elseif ($node instanceof GroupbyNode) {
+            return $this->addGroupby( $node);
         }
 
         throw new UnknownNodeException(sprintf('Unknown node type "%s" (%s)', $node->getNodeName(), get_class($node)));
@@ -97,4 +100,16 @@ class QueryBuilder
 
         return $this;
     }
+
+    /**
+     * @param GroupbyNode $groupby
+     * @return $this
+     */
+    public function addGroupby( GroupbyNode $groupby )
+    {
+        $this->query->setGroupby( $groupby );
+
+        return $this;
+    }
+
 }
